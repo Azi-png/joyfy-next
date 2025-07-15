@@ -56,6 +56,7 @@ function createIsomorphicLink() {
 				},
 			},
 		});
+		console.log('GRAPHQL URL:', process.env.REACT_APP_API_GRAPHQL_URL);
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 			if (graphQLErrors) {
