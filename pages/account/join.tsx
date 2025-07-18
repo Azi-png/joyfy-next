@@ -36,6 +36,7 @@ const Join: NextPage = () => {
 	};
 
 	const handleInput = useCallback((name: any, value: any) => {
+		// name: qaysi maydonni, value : qaysi qiymatga yangilaymiz
 		setInput((prev) => {
 			return { ...prev, [name]: value };
 		});
