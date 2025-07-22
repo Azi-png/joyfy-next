@@ -78,6 +78,7 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 								color={'default'}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
 									e.stopPropagation();
+									console.log('LIKE CLICKED', property?._id, user);
 									likePropertyHandler(user, property?._id);
 								}}
 							>
