@@ -1,6 +1,7 @@
 export enum NotificationType {
 	LIKE = 'LIKE',
 	COMMENT = 'COMMENT',
+	NOTICE = 'NOTICE',
 }
 
 export enum NotificationStatus {
@@ -11,5 +12,7 @@ export enum NotificationStatus {
 export enum NotificationGroup {
 	MEMBER = 'MEMBER',
 	ARTICLE = 'ARTICLE',
-	PROPERTY = 'PROPERTY',
+	COURSE = 'COURSE',
+	COMMENT = 'COMMENT',
+	NOTICE = 'NOTICE', // ✅ add (admin site notice)
 }

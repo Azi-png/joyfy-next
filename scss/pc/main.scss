@@ -4,14 +4,14 @@
 
 @import '/scss/pc/homepage/homepage';
 
-@import '/scss/pc/property/property';
-@import '/scss/pc/property/detail.scss';
+@import '/scss/pc/course/course';
+@import '/scss/pc/course/detail.scss';
 
-@import '/scss/pc/agent/agent';
-@import '/scss/pc/agent/detail.scss';
+@import '/scss/pc/teacher/teacher';
+@import '/scss/pc/teacher/detail.scss';
 @import '/scss/pc/mypage/mypage.scss';
-@import '/scss/pc/mypage/addNewProperty.scss';
-@import '/scss/pc/mypage/myProperties.scss';
+@import '/scss/pc/mypage/addNewCourse.scss';
+@import '/scss/pc/mypage/myCourses.scss';
 @import '/scss/pc/mypage/myFavorites.scss';
 @import '/scss/pc/mypage/mySaved.scss';
 @import '/scss/pc/mypage/myProfile.scss';
@@ -31,7 +31,7 @@
 @import '/scss/pc/member/memberPage.scss';
 @import '/scss/pc/member/memberFollows.scss';
 @import '/scss/pc/member/memberArticles.scss';
-@import '/scss/pc/member/memberProperties.scss';
+@import '/scss/pc/member/memberCourses.scss';
 
 body {
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -78,7 +78,9 @@ body::-webkit-scrollbar {
 						justify-content: space-between;
 						div {
 							position: relative;
-							color: #eeeeeeed;
+							color: whitesmoke;
+							text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+
 							font-family: $font;
 							font-size: 15px;
 							font-style: normal;
@@ -175,8 +177,20 @@ body::-webkit-scrollbar {
 		position: relative;
 		width: 100%;
 		height: 860px;
-		background-image: url('/img/banner/header1.svg');
+		background-image: url('/img/banner/h.png');
 		background-size: cover;
+		.overlay-image {
+			position: absolute;
+			top: 220px; /* Yuqoridan masofa */
+			right: 80px; /* O'ng tomondan masofa */
+			width: 530px; /* Rasm kengligi */
+			height: 470px; /* Rasm balandligi */
+			background-image: url('/img/banner/soz.png');
+			background-size: cover;
+			border-radius: 15px;
+			// box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+			z-index: 1; /* Boshqa elementlardan ustida */
+		}
 		.container {
 			position: relative;
 			margin-top: 20px;

@@ -97,7 +97,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		error: getCommentsError,
 		refetch: getCommentsRefetch,
 	} = useQuery(GET_COMMENTS, {
-		fetchPolicy: 'cache-and-network',
+		fetchPolicy: 'no-cache',
 		variables: {
 			input: searchFilter,
 		},
@@ -249,7 +249,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 					<Stack className="main-box">
 						<Stack className="left-config">
 							<Stack className={'image-info'}>
-								<img src={'/img/logo/logoText.svg'} />
 								<Stack className={'community-name'}>
 									<Typography className={'name'}>Community Board Article</Typography>
 								</Stack>

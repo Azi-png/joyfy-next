@@ -28,51 +28,51 @@ const withLayoutBasic = (Component: any) => {
 				bgImage = '';
 
 			switch (router.pathname) {
-				case '/property':
-					title = 'Property Search';
+				case '/course':
+					title = 'Course Search';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
+					bgImage = '/img/banner/4.jpg';
 					break;
-				case '/agent':
-					title = 'Agents';
+				case '/teacher':
+					title = 'Teachers';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/agents.webp';
+					bgImage = '/img/banner/uy.png';
 					break;
-				case '/agent/detail':
-					title = 'Agent Page';
+				case '/teacher/detail':
+					title = 'Teacher Page';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/h.png';
 					break;
 				case '/mypage':
 					title = 'my page';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/3.png';
 					break;
 				case '/community':
 					title = 'Community';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/jj.webp';
 					break;
 				case '/community/detail':
 					title = 'Community Detail';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/o.png';
 					break;
 				case '/cs':
 					title = 'CS';
 					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/4.jpg';
 					break;
 				case '/account/join':
 					title = 'Login/Signup';
 					desc = 'Authentication Process';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/uy.png';
 					setAuthHeader(true);
 					break;
 				case '/member':
 					title = 'Member Page';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/h.png';
 					break;
 				default:
 					break;
@@ -93,8 +93,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Joyfy</title>
+						<meta name={'title'} content={`Joyfy`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
@@ -115,8 +115,8 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Joyfy</title>
+						<meta name={'title'} content={`Joyfy`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
@@ -127,14 +127,15 @@ const withLayoutBasic = (Component: any) => {
 							className={`header-basic ${authHeader && 'auth'}`}
 							style={{
 								backgroundImage: `url(${memoizedValues.bgImage})`,
-								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
+								backgroundSize: 'cover', // rasm ekran to‘liq yopadi
+								backgroundPosition: 'center 30%',
+								backgroundRepeat: 'no-repeat',
 							}}
 						>
-							<Stack className={'container'}>
+							{/* <Stack className={'container'}>
 								<strong>{t(memoizedValues.title)}</strong>
 								<span>{t(memoizedValues.desc)}</span>
-							</Stack>
+							</Stack> */}
 						</Stack>
 
 						<Stack id={'main'}>

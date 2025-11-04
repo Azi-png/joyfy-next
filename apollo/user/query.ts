@@ -1,12 +1,13 @@
 import { gql } from '@apollo/client';
+import { NOTIFICATION_FIELDS } from './mutation';
 
 /**************************
  *         MEMBER         *
  *************************/
 
-export const GET_AGENTS = gql`
-	query GetAgents($input: AgentsInquiry!) {
-		getAgents(input: $input) {
+export const GET_TEACHERS = gql`
+	query GetTeachers($input: TeachersInquiry!) {
+		getTeachers(input: $input) {
 			list {
 				_id
 				memberType
@@ -20,7 +21,7 @@ export const GET_AGENTS = gql`
 				memberDesc
 				memberWarnings
 				memberBlocks
-				memberProperties
+				memberCourses
 				memberRank
 				memberPoints
 				memberLikes
@@ -55,13 +56,13 @@ export const GET_MEMBER = gql(`
         memberImage
         memberAddress
         memberDesc
-        memberProperties
+        memberCourses
         memberArticles
         memberPoints
         memberLikes
         memberViews
         memberFollowings
-				memberFollowers
+		memberFollowers
         memberRank
         memberWarnings
         memberBlocks
@@ -79,32 +80,38 @@ export const GET_MEMBER = gql(`
 `);
 
 /**************************
- *        PROPERTY        *
+ *        COURSE      *
  *************************/
 
-export const GET_PROPERTY = gql`
-	query GetProperty($input: String!) {
-		getProperty(propertyId: $input) {
+export const GET_COURSE = gql`
+	query GetCourse($input: String!) {
+		getCourse(courseId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseLocation
+			courseAddress
+			courseTitle
+			coursePrice
+			courseFormat
+			courseAge
+			courseDuration
+			courseViews
+			courseLikes
+			courseImages
+			courseDesc
+			isOnline
+			isOffline
 			memberId
-			soldAt
+			cancelledAt
 			deletedAt
-			constructedAt
+			startDate
+			courseTimes {
+				day
+				time
+			}
+			courseDurationWeeks
+			coursesPerWeek
 			createdAt
 			updatedAt
 			memberData {
@@ -137,31 +144,37 @@ export const GET_PROPERTY = gql`
 	}
 `;
 
-export const GET_PROPERTIES = gql`
-	query GetProperties($input: PropertiesInquiry!) {
-		getProperties(input: $input) {
+export const GET_COURSES = gql`
+	query GetCourses($input: CoursesInquiry!) {
+		getCourses(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseLocation
+				courseAddress
+				courseTitle
+				coursePrice
+				courseFormat
+				courseAge
+				courseDuration
+				courseViews
+				courseLikes
+				courseRank
+				courseImages
+				courseDesc
+				isOnline
+				isOffline
 				memberId
-				soldAt
+				cancelledAt
 				deletedAt
-				constructedAt
+				startDate
+				courseTimes {
+					day
+					time
+				}
+				courseDurationWeeks
+				coursesPerWeek
 				createdAt
 				updatedAt
 				memberData {
@@ -177,7 +190,7 @@ export const GET_PROPERTIES = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -199,30 +212,36 @@ export const GET_PROPERTIES = gql`
 	}
 `;
 
-export const GET_AGENT_PROPERTIES = gql`
-	query GetAgentProperties($input: AgentPropertiesInquiry!) {
-		getAgentProperties(input: $input) {
+export const GET_TEACHER_COURSES = gql`
+	query GetTeacherCourses($input: TeacherCoursesInquiry!) {
+		getTeacherCourses(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseLocation
+				courseAddress
+				courseTitle
+				coursePrice
+				courseFormat
+				courseAge
+				courseDuration
+				courseViews
+				courseLikes
+				courseImages
+				courseDesc
+				isOnline
+				isOffline
 				memberId
-				soldAt
+				cancelledAt
 				deletedAt
-				constructedAt
+				startDate
+				courseTimes {
+					day
+					time
+				}
+				courseDurationWeeks
+				coursesPerWeek
 				createdAt
 				updatedAt
 			}
@@ -238,27 +257,27 @@ export const GET_FAVORITES = gql`
 		getFavorites(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseLocation
+				courseAddress
+				courseTitle
+				coursePrice
+				courseFormat
+				courseAge
+				courseDuration
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImages
+				courseDesc
+				isOnline
+				isOffline
 				memberId
-				soldAt
+				cancelledAt
 				deletedAt
-				constructedAt
+				startDate
 				createdAt
 				updatedAt
 				memberData {
@@ -272,7 +291,7 @@ export const GET_FAVORITES = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes
@@ -301,27 +320,33 @@ export const GET_VISITED = gql`
 		getVisited(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseLocation
+				courseAddress
+				courseTitle
+				coursePrice
+				courseFormat
+				courseAge
+				courseDuration
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImages
+				courseDesc
+				isOnline
+				isOffline
 				memberId
-				soldAt
+				cancelledAt
 				deletedAt
-				constructedAt
+				startDate
+				courseTimes {
+					day
+					time
+				}
+				courseDurationWeeks
+				coursesPerWeek
 				createdAt
 				updatedAt
 				memberData {
@@ -335,7 +360,7 @@ export const GET_VISITED = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes
@@ -391,7 +416,7 @@ export const GET_BOARD_ARTICLE = gql`
 				memberDesc
 				memberWarnings
 				memberBlocks
-				memberProperties
+				memberCourses
 				memberRank
 				memberPoints
 				memberLikes
@@ -443,7 +468,7 @@ export const GET_BOARD_ARTICLES = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -489,7 +514,7 @@ export const GET_COMMENTS = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -540,7 +565,7 @@ export const GET_MEMBER_FOLLOWERS = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes
@@ -583,7 +608,7 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes
@@ -612,6 +637,69 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 			}
 			metaCounter {
 				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *         NOTICE        *
+ *************************/
+
+export const GET_NOTICES = gql`
+	query GetNotices($input: NoticeInquiry!) {
+		getNotices(input: $input) {
+			list {
+				_id
+				noticeStatus
+				noticeTitle
+				noticeContent
+				memberId
+				createdAt
+				updatedAt
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_NOTICE = gql`
+	query GetNotice($input: String!) {
+		getNotice(input: $input) {
+			_id
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_CONTACTS = gql`
+	query {
+		findAllContacts {
+			_id
+			name
+			email
+			subject
+			message
+			createdAt
+		}
+	}
+`;
+
+// ---------- Queries ----------
+export const GET_NOTIFICATIONS = gql`
+	${NOTIFICATION_FIELDS}
+	query GetNotifications($input: NotificationsInquiry!) {
+		getNotifications(input: $input) {
+			total
+			list {
+				...NotificationFields
 			}
 		}
 	}

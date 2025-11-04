@@ -17,6 +17,7 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+import NotificationBell from './notification/Notification';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -45,7 +46,7 @@ const Top = () => {
 
 	useEffect(() => {
 		switch (router.pathname) {
-			case '/property/detail':
+			case '/course/detail':
 				setBgColor(true);
 				break;
 			default:
@@ -145,11 +146,11 @@ const Top = () => {
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
-				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
+				<Link href={'/course'}>
+					<div>{t('Courses')}</div>
 				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+				<Link href={'/teacher'}>
+					<div> {t('Teachers')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
 					<div> {t('Community')} </div>
@@ -166,18 +167,18 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img src="/img/logo/logooo.png" alt="" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/property'}>
-								<div>{t('Properties')}</div>
+							<Link href={'/course'}>
+								<div>{t('Courses')}</div>
 							</Link>
-							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+							<Link href={'/teacher'}>
+								<div> {t('Teachers')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div> {t('Community')} </div>
@@ -230,7 +231,8 @@ const Top = () => {
 							)}
 
 							<div className={'lan-box'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />}
+								{/* {user?._id && <NotificationsOutlinedIcon className={'notification-icon'} />} */}
+								{user?._id && <NotificationBell />}{' '}
 								<Button
 									disableRipple
 									className="btn-lang"
@@ -245,7 +247,6 @@ const Top = () => {
 										)}
 									</Box>
 								</Button>
-
 								<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose} sx={{ position: 'absolute' }}>
 									<MenuItem disableRipple onClick={langChoice} id="en">
 										<img

@@ -18,14 +18,33 @@ function getHeaders() {
 	return headers;
 }
 
+// const tokenRefreshLink = new TokenRefreshLink({
+// 	accessTokenField: 'accessToken',
+// 	isTokenValidOrUndefined: () => {
+// 		return true;
+// 	}, // @ts-ignore
+// 	fetchAccessToken: () => {
+// 		// execute refresh token
+// 		return null;
+// 	},
+// });
 const tokenRefreshLink = new TokenRefreshLink({
 	accessTokenField: 'accessToken',
 	isTokenValidOrUndefined: () => {
 		return true;
-	}, // @ts-ignore
+	},
+	// @ts-ignore
 	fetchAccessToken: () => {
-		// execute refresh token
+		// refresh token bajarish
 		return null;
+	},
+	handleFetch: (accessToken) => {
+		// Yangi access token bilan ishlash
+		// Masalan, uni saqlash yoki auth holatini yangilash
+	},
+	handleError: (err) => {
+		// Xatoliklarni qayta ishlash
+		console.error('Token yangilashda xato:', err);
 	},
 });
 

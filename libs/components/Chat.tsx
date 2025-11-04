@@ -150,7 +150,7 @@ const Chat = () => {
 								const { text, memberData } = ele;
 								const memberImage = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
-									: '/img/profile/defaultUser.svg';
+									: '/img/profile/girl.svg';
 
 								return memberData?._id === user?._id ? (
 									<Box

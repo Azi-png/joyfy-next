@@ -74,8 +74,8 @@ const Join: NextPage = () => {
 						<Stack className={'left'}>
 							{/* @ts-ignore */}
 							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
-								<span>Nestar</span>
+								<img src="/img/logo/logooo.png" alt="" />
+								<span>Joyfy</span>
 							</Box>
 							<Box className={'info'}>
 								<span>{loginView ? 'login' : 'signup'}</span>
@@ -146,12 +146,12 @@ const Join: NextPage = () => {
 													control={
 														<Checkbox
 															size="small"
-															name={'AGENT'}
+															name={'TEACHER'}
 															onChange={checkUserTypeHandler}
-															checked={input?.type == 'AGENT'}
+															checked={input?.type == 'TEACHER'}
 														/>
 													}
-													label="Agent"
+													label="Teacher"
 												/>
 											</FormGroup>
 										</div>
@@ -207,7 +207,12 @@ const Join: NextPage = () => {
 								)}
 							</Box>
 						</Stack>
-						<Stack className={'right'}></Stack>
+						<Stack className={'right'}>
+							<video autoPlay loop muted playsInline className="bg-video">
+								<source src="/img/logo/jj.mp4" type="video/mp4" />
+								Your browser does not support the video tag.
+							</video>
+						</Stack>
 					</Stack>
 				</Stack>
 			</Stack>

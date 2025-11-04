@@ -6,9 +6,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { propertySquare, propertyYears } from '../../config';
-import { PropertyLocation, PropertyType } from '../../enums/property.enum';
-import { PropertiesInquiry } from '../../types/property/property.input';
+import { availableOptions, courseAges } from '../../config';
+import { CourseLocation, CourseType, CourseFormat, DaysOfWeek } from '../../enums/course.enum';
+import { CoursesInquiry } from '../../types/course/course.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 
@@ -32,28 +32,28 @@ const MenuProps = {
 	},
 };
 
-const thisYear = new Date().getFullYear();
-
 interface HeaderFilterProps {
-	initialInput: PropertiesInquiry;
+	initialInput: CoursesInquiry;
 }
 
 const HeaderFilter = (props: HeaderFilterProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const { t, i18n } = useTranslation('common');
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
+	const [searchFilter, setSearchFilter] = useState<CoursesInquiry>(initialInput);
 	const locationRef: any = useRef();
 	const typeRef: any = useRef();
-	const roomsRef: any = useRef();
+	const formatRef: any = useRef();
 	const router = useRouter();
 	const [openAdvancedFilter, setOpenAdvancedFilter] = useState(false);
 	const [openLocation, setOpenLocation] = useState(false);
 	const [openType, setOpenType] = useState(false);
-	const [openRooms, setOpenRooms] = useState(false);
-	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
-	const [propertyType, setPropertyType] = useState<PropertyType[]>(Object.values(PropertyType));
-	const [yearCheck, setYearCheck] = useState({ start: 1970, end: thisYear });
+	const [openFormat, setOpenFormat] = useState(false);
+	const [courseLocation, setCourseLocation] = useState<CourseLocation[]>(Object.values(CourseLocation));
+	const [courseType, setCourseType] = useState<CourseType[]>(Object.values(CourseType));
+	const [courseFormat, setCourseFormat] = useState<CourseFormat[]>(Object.values(CourseFormat));
+	const [daysOfWeek] = useState<DaysOfWeek[]>(Object.values(DaysOfWeek));
+	const [selectedDays, setSelectedDays] = useState<DaysOfWeek[]>([]);
 	const [optionCheck, setOptionCheck] = useState('all');
 
 	/** LIFECYCLES **/
@@ -67,8 +67,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				setOpenType(false);
 			}
 
-			if (!roomsRef?.current?.contains(event.target)) {
-				setOpenRooms(false);
+			if (!formatRef?.current?.contains(event.target)) {
+				setOpenFormat(false);
 			}
 		};
 
@@ -82,36 +82,36 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	/** HANDLERS **/
 	const advancedFilterHandler = (status: boolean) => {
 		setOpenLocation(false);
-		setOpenRooms(false);
+		setOpenFormat(false);
 		setOpenType(false);
 		setOpenAdvancedFilter(status);
 	};
 
 	const locationStateChangeHandler = () => {
 		setOpenLocation((prev) => !prev);
-		setOpenRooms(false);
+		setOpenFormat(false);
 		setOpenType(false);
 	};
 
 	const typeStateChangeHandler = () => {
 		setOpenType((prev) => !prev);
 		setOpenLocation(false);
-		setOpenRooms(false);
+		setOpenFormat(false);
 	};
 
-	const roomStateChangeHandler = () => {
-		setOpenRooms((prev) => !prev);
+	const formatStateChangeHandler = () => {
+		setOpenFormat((prev) => !prev);
 		setOpenType(false);
 		setOpenLocation(false);
 	};
 
 	const disableAllStateHandler = () => {
-		setOpenRooms(false);
+		setOpenFormat(false);
 		setOpenType(false);
 		setOpenLocation(false);
 	};
 
-	const propertyLocationSelectHandler = useCallback(
+	const courseLocationSelectHandler = useCallback(
 		async (value: any) => {
 			try {
 				setSearchFilter({
@@ -123,13 +123,13 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				});
 				typeStateChangeHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyLocationSelectHandler:', err);
+				console.log('ERROR, courseLocationSelectHandler:', err);
 			}
 		},
 		[searchFilter],
 	);
 
-	const propertyTypeSelectHandler = useCallback(
+	const courseTypeSelectHandler = useCallback(
 		async (value: any) => {
 			try {
 				setSearchFilter({
@@ -139,64 +139,64 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						typeList: [value],
 					},
 				});
-				roomStateChangeHandler();
+				formatStateChangeHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyTypeSelectHandler:', err);
+				console.log('ERROR, courseTypeSelectHandler:', err);
 			}
 		},
 		[searchFilter],
 	);
 
-	const propertyRoomSelectHandler = useCallback(
+	const courseFormatSelectHandler = useCallback(
 		async (value: any) => {
 			try {
 				setSearchFilter({
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						roomsList: [value],
+						formatList: [value],
 					},
 				});
 				disableAllStateHandler();
 			} catch (err: any) {
-				console.log('ERROR, propertyRoomSelectHandler:', err);
+				console.log('ERROR, courseFormatSelectHandler:', err);
 			}
 		},
 		[searchFilter],
 	);
 
-	const propertyBedSelectHandler = useCallback(
+	const courseAgeSelectHandler = useCallback(
 		async (number: Number) => {
 			try {
 				if (number != 0) {
-					if (searchFilter?.search?.bedsList?.includes(number)) {
+					if (searchFilter?.search?.agesList?.includes(number)) {
 						setSearchFilter({
 							...searchFilter,
 							search: {
 								...searchFilter.search,
-								bedsList: searchFilter?.search?.bedsList?.filter((item: Number) => item !== number),
+								agesList: searchFilter?.search?.agesList?.filter((item: Number) => item !== number),
 							},
 						});
 					} else {
 						setSearchFilter({
 							...searchFilter,
-							search: { ...searchFilter.search, bedsList: [...(searchFilter?.search?.bedsList || []), number] },
+							search: { ...searchFilter.search, agesList: [...(searchFilter?.search?.agesList || []), number] },
 						});
 					}
 				} else {
-					delete searchFilter?.search.bedsList;
+					delete searchFilter?.search.agesList;
 					setSearchFilter({ ...searchFilter });
 				}
 
-				console.log('propertyBedSelectHandler:', number);
+				console.log('courseAgeSelectHandler:', number);
 			} catch (err: any) {
-				console.log('ERROR, propertyBedSelectHandler:', err);
+				console.log('ERROR, courseAgeSelectHandler:', err);
 			}
 		},
 		[searchFilter],
 	);
 
-	const propertyOptionSelectHandler = useCallback(
+	const courseOptionSelectHandler = useCallback(
 		async (e: any) => {
 			try {
 				const value = e.target.value;
@@ -220,67 +220,53 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					});
 				}
 			} catch (err: any) {
-				console.log('ERROR, propertyOptionSelectHandler:', err);
+				console.log('ERROR, courseOptionSelectHandler:', err);
 			}
 		},
 		[searchFilter],
 	);
 
-	const propertySquareHandler = useCallback(
-		async (e: any, type: string) => {
-			const value = e.target.value;
+	const daysOfWeekHandler = useCallback(
+		async (day: DaysOfWeek) => {
+			try {
+				let updatedDays: DaysOfWeek[];
 
-			if (type == 'start') {
-				setSearchFilter({
-					...searchFilter,
-					search: {
-						...searchFilter.search,
-						// @ts-ignore
-						squaresRange: { ...searchFilter.search.squaresRange, start: parseInt(value) },
-					},
-				});
-			} else {
-				setSearchFilter({
-					...searchFilter,
-					search: {
-						...searchFilter.search,
-						// @ts-ignore
-						squaresRange: { ...searchFilter.search.squaresRange, end: parseInt(value) },
-					},
-				});
+				if (selectedDays.includes(day)) {
+					updatedDays = selectedDays.filter((d) => d !== day);
+				} else {
+					updatedDays = [...selectedDays, day];
+				}
+
+				setSelectedDays(updatedDays);
+
+				if (updatedDays.length > 0) {
+					setSearchFilter({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							daysOfWeekList: updatedDays,
+						},
+					});
+				} else {
+					delete searchFilter.search.daysOfWeekList;
+					setSearchFilter({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+						},
+					});
+				}
+			} catch (err: any) {
+				console.log('ERROR, daysOfWeekHandler:', err);
 			}
 		},
-		[searchFilter],
+		[searchFilter, selectedDays],
 	);
-
-	const yearStartChangeHandler = async (event: any) => {
-		setYearCheck({ ...yearCheck, start: Number(event.target.value) });
-
-		setSearchFilter({
-			...searchFilter,
-			search: {
-				...searchFilter.search,
-				periodsRange: { start: Number(event.target.value), end: yearCheck.end },
-			},
-		});
-	};
-
-	const yearEndChangeHandler = async (event: any) => {
-		setYearCheck({ ...yearCheck, end: Number(event.target.value) });
-
-		setSearchFilter({
-			...searchFilter,
-			search: {
-				...searchFilter.search,
-				periodsRange: { start: yearCheck.start, end: Number(event.target.value) },
-			},
-		});
-	};
 
 	const resetFilterHandler = () => {
 		setSearchFilter(initialInput);
 		setOptionCheck('all');
-		setYearCheck({ start: 1970, end: thisYear });
+		setSelectedDays([]);
 	};
 
 	const pushSearchHandler = async () => {
@@ -293,25 +279,44 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				delete searchFilter.search.typeList;
 			}
 
-			if (searchFilter?.search?.roomsList?.length == 0) {
-				delete searchFilter.search.roomsList;
+			if (searchFilter?.search?.formatList?.length == 0) {
+				delete searchFilter.search.formatList;
 			}
 
 			if (searchFilter?.search?.options?.length == 0) {
 				delete searchFilter.search.options;
 			}
 
-			if (searchFilter?.search?.bedsList?.length == 0) {
-				delete searchFilter.search.bedsList;
+			if (searchFilter?.search?.agesList?.length == 0) {
+				delete searchFilter.search.agesList;
+			}
+
+			if (searchFilter?.search?.daysOfWeekList?.length == 0) {
+				delete searchFilter.search.daysOfWeekList;
 			}
 
 			await router.push(
-				`/property?input=${JSON.stringify(searchFilter)}`,
-				`/property?input=${JSON.stringify(searchFilter)}`,
+				`/course?input=${JSON.stringify(searchFilter)}`,
+				`/course?input=${JSON.stringify(searchFilter)}`,
 			);
 		} catch (err: any) {
 			console.log('ERROR, pushSearchHandler:', err);
 		}
+	};
+
+	const getFormatDisplayName = (format: CourseFormat) => {
+		switch (format) {
+			case CourseFormat.GROUP_CLASS:
+				return 'Group Class';
+			case CourseFormat.ONE_ON_ONE_TUTORING:
+				return '1-on-1 Tutoring';
+			default:
+				return format;
+		}
+	};
+
+	const getDayDisplayName = (day: DaysOfWeek) => {
+		return day.charAt(0) + day.slice(1).toLowerCase();
 	};
 
 	if (device === 'mobile') {
@@ -326,12 +331,14 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<ExpandMoreIcon />
 						</Box>
 						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
-							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Property type')} </span>
+							<span> {searchFilter?.search?.typeList ? searchFilter?.search?.typeList[0] : t('Course type')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
+						<Box className={`box ${openFormat ? 'on' : ''}`} onClick={formatStateChangeHandler}>
 							<span>
-								{searchFilter?.search?.roomsList ? `${searchFilter?.search?.roomsList[0]} rooms}` : t('Rooms')}
+								{searchFilter?.search?.formatList
+									? getFormatDisplayName(searchFilter?.search?.formatList[0])
+									: t('Course Format')}
 							</span>
 							<ExpandMoreIcon />
 						</Box>
@@ -348,9 +355,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 
 					{/*MENU */}
 					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
-						{propertyLocation.map((location: string) => {
+						{courseLocation.map((location: string) => {
 							return (
-								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
+								<div onClick={() => courseLocationSelectHandler(location)} key={location}>
 									<img src={`img/banner/cities/${location}.webp`} alt="" />
 									<span>{location}</span>
 								</div>
@@ -359,11 +366,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</div>
 
 					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
-						{propertyType.map((type: string) => {
+						{courseType.map((type: string) => {
 							return (
 								<div
 									style={{ backgroundImage: `url(/img/banner/types/${type.toLowerCase()}.webp)` }}
-									onClick={() => propertyTypeSelectHandler(type)}
+									onClick={() => courseTypeSelectHandler(type)}
 									key={type}
 								>
 									<span>{type}</span>
@@ -372,11 +379,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						})}
 					</div>
 
-					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
-						{[1, 2, 3, 4, 5].map((room: number) => {
+					<div className={`filter-rooms ${openFormat ? 'on' : ''}`} ref={formatRef}>
+						{courseFormat.map((format: CourseFormat) => {
 							return (
-								<span onClick={() => propertyRoomSelectHandler(room)} key={room}>
-									{room} room{room > 1 ? 's' : ''}
+								<span onClick={() => courseFormatSelectHandler(format)} key={format}>
+									{getFormatDisplayName(format)}
 								</span>
 							);
 						})}
@@ -397,7 +404,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								<CloseIcon />
 							</div>
 							<div className={'top'}>
-								<span>Find your home</span>
+								<span>Find your course</span>
 								<div className={'search-input-box'}>
 									<img src="/img/icons/search.svg" alt="" />
 									<input
@@ -417,38 +424,38 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
-										<span>bedrooms</span>
+										<span>Course Ages</span>
 										<div className={'inside'}>
 											<div
-												className={`room ${!searchFilter?.search?.bedsList ? 'active' : ''}`}
-												onClick={() => propertyBedSelectHandler(0)}
+												className={`room ${!searchFilter?.search?.agesList ? 'active' : ''}`}
+												onClick={() => courseAgeSelectHandler(0)}
 											>
 												Any
 											</div>
-											{[1, 2, 3, 4, 5].map((bed: number) => (
+											{courseAges?.map((age: number) => (
 												<div
-													className={`room ${searchFilter?.search?.bedsList?.includes(bed) ? 'active' : ''}`}
-													onClick={() => propertyBedSelectHandler(bed)}
-													key={bed}
+													className={`room ${searchFilter?.search?.agesList?.includes(age) ? 'active' : ''}`}
+													onClick={() => courseAgeSelectHandler(age)}
+													key={age}
 												>
-													{bed == 0 ? 'Any' : bed}
+													{age}
 												</div>
 											))}
 										</div>
 									</div>
 									<div className={'box'}>
-										<span>options</span>
+										<span>Options</span>
 										<div className={'inside'}>
 											<FormControl>
 												<Select
 													value={optionCheck}
-													onChange={propertyOptionSelectHandler}
+													onChange={courseOptionSelectHandler}
 													displayEmpty
 													inputProps={{ 'aria-label': 'Without label' }}
 												>
 													<MenuItem value={'all'}>All Options</MenuItem>
-													<MenuItem value={'propertyBarter'}>Barter</MenuItem>
-													<MenuItem value={'propertyRent'}>Rent</MenuItem>
+													<MenuItem value={'isOnline'}>Online</MenuItem>
+													<MenuItem value={'isOffline'}>Offline</MenuItem>
 												</Select>
 											</FormControl>
 										</div>
@@ -456,86 +463,25 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								</div>
 								<div className={'row-box'} style={{ marginTop: '44px' }}>
 									<div className={'box'}>
-										<span>Year Built</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.start.toString()}
-													onChange={yearStartChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
+										<span>Days of Week</span>
+										<div className={'inside'} style={{ flexWrap: 'wrap', gap: '8px' }}>
+											{daysOfWeek.map((day: DaysOfWeek) => (
+												<div
+													key={day}
+													className={`day-item ${selectedDays.includes(day) ? 'active' : ''}`}
+													onClick={() => daysOfWeekHandler(day)}
+													style={{
+														padding: '8px 12px',
+														border: '1px solid #ccc',
+														borderRadius: '4px',
+														cursor: 'pointer',
+														backgroundColor: selectedDays.includes(day) ? '#1976d2' : 'transparent',
+														color: selectedDays.includes(day) ? 'white' : 'black',
+													}}
 												>
-													{propertyYears?.slice(0)?.map((year: number) => (
-														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
-															{year}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.end.toString()}
-													onChange={yearEndChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{propertyYears
-														?.slice(0)
-														.reverse()
-														.map((year: number) => (
-															<MenuItem value={year} disabled={yearCheck.start >= year} key={year}>
-																{year}
-															</MenuItem>
-														))}
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-									<div className={'box'}>
-										<span>square meter</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.squaresRange?.start}
-													onChange={(e: any) => propertySquareHandler(e, 'start')}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{propertySquare.map((square: number) => (
-														<MenuItem
-															value={square}
-															disabled={(searchFilter?.search?.squaresRange?.end || 0) < square}
-															key={square}
-														>
-															{square}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.squaresRange?.end}
-													onChange={(e: any) => propertySquareHandler(e, 'end')}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{propertySquare.map((square: number) => (
-														<MenuItem
-															value={square}
-															disabled={(searchFilter?.search?.squaresRange?.start || 0) > square}
-															key={square}
-														>
-															{square}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
+													{getDayDisplayName(day)}
+												</div>
+											))}
 										</div>
 									</div>
 								</div>
@@ -566,16 +512,7 @@ HeaderFilter.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
-		search: {
-			squaresRange: {
-				start: 0,
-				end: 500,
-			},
-			pricesRange: {
-				start: 0,
-				end: 2000000,
-			},
-		},
+		search: {},
 	},
 };
 

@@ -20,7 +20,7 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberDesc
 				memberWarnings
 				memberBlocks
-				memberProperties
+				memberCourses
 				memberRank
 				memberArticles
 				memberPoints
@@ -39,33 +39,39 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        COURSE       *
  *************************/
 
-export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
-	query GetAllPropertiesByAdmin($input: AllPropertiesInquiry!) {
-		getAllPropertiesByAdmin(input: $input) {
+export const GET_ALL_COURSES_BY_ADMIN = gql`
+	query GetAllCoursesByAdmin($input: AllCoursesInquiry!) {
+		getAllCoursesByAdmin(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseLocation
+				courseAddress
+				courseTitle
+				coursePrice
+				courseFormat
+				courseAge
+				courseDuration
+				courseViews
+				courseLikes
+				courseImages
+				courseDesc
+				isOnline
+				isOffline
 				memberId
-				soldAt
+				cancelledAt
 				deletedAt
-				constructedAt
+				startDate
+				courseTimes {
+					day
+					time
+				}
+				courseDurationWeeks
+				coursesPerWeek
 				createdAt
 				updatedAt
 				memberData {
@@ -81,7 +87,7 @@ export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -131,7 +137,7 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -178,7 +184,7 @@ export const GET_COMMENTS = gql`
 					memberDesc
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -188,6 +194,40 @@ export const GET_COMMENTS = gql`
 					updatedAt
 					accessToken
 				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *         FAQ        *
+ *************************/
+export const GET_FAQS = gql`
+	query GetAllFaqs {
+		getAllFaqs {
+			_id
+			question
+			answer
+			status
+			category
+			createdAt
+		}
+	}
+`;
+export const GET_NOTICES = gql`
+	query GetNotices($input: NoticeInquiry!) {
+		getNotices(input: $input) {
+			list {
+				_id
+				noticeStatus
+				noticeTitle
+				noticeContent
+				memberId
+				createdAt
+				updatedAt
 			}
 			metaCounter {
 				total

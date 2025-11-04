@@ -5,16 +5,16 @@ export default function Document() {
 		<Html lang="en">
 			<Head>
 				<meta name="robots" content="index,follow" />
-				<link rel="icon" type="image/png" href="/img/logo/favicon.svg" />
+				<link rel="icon" type="image/png" href="/img/logo/favicon.png" />
 
 				{/* SEO */}
-				<meta name="keyword" content={'nestar, nestar.uz, devex mern, mern nestjs fullstack'} />
+				<meta name="keyword" content={'joyfy, joyfy.uz, devex mern, mern nestjs fullstack'} />
 				<meta
 					name={'description'}
 					content={
-						'Buy and sell properties anywhere anytime in South Korea. Best Properties at Best prices on nestar.uz | ' +
-						'Покупайте и продавайте недвижимость в любой точке Южной Кореи в любое время. Лучшая недвижимость по лучшим ценам на nestar.uz | ' +
-						'대한민국 언제 어디서나 부동산을 사고팔 수 있습니다. Nestar.uz에서 최적의 가격으로 최고의 부동산을 만나보세요'
+						'Learn and explore courses anytime, anywhere in South Korea. Best courses at best prices on Joyfy.uz | ' +
+						'Изучайте и открывайте для себя курсы в любой точке Южной Кореи в любое время. Лучшие курсы по лучшим ценам на Joyfy.uz | ' +
+						'대한민국 언제 어디서나 강좌를 배우고 찾아보세요. Joyfy.uz에서 최적의 가격으로 최고의 강좌를 만나보세요'
 					}
 				/>
 			</Head>

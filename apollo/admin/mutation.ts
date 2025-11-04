@@ -17,7 +17,7 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberImage
 			memberAddress
 			memberDesc
-			memberProperties
+			memberCourses
 			memberRank
 			memberArticles
 			memberPoints
@@ -34,61 +34,73 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *        COURSE        *
  *************************/
 
-export const UPDATE_PROPERTY_BY_ADMIN = gql`
-	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
-		updatePropertyByAdmin(input: $input) {
+export const UPDATE_COURSE_BY_ADMIN = gql`
+	mutation UpdateCourseByAdmin($input: CourseUpdate!) {
+		updateCourseByAdmin(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseLocation
+			courseAddress
+			courseTitle
+			coursePrice
+			courseFormat
+			courseAge
+			courseDuration
+			courseViews
+			courseLikes
+			courseImages
+			courseDesc
+			isOnline
+			isOffline
 			memberId
-			soldAt
+			cancelledAt
 			deletedAt
-			constructedAt
+			startDate
+			courseTimes {
+				day
+				time
+			}
+			courseDurationWeeks
+			coursesPerWeek
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const REMOVE_PROPERTY_BY_ADMIN = gql`
-	mutation RemovePropertyByAdmin($input: String!) {
-		removePropertyByAdmin(propertyId: $input) {
+export const REMOVE_COURSE_BY_ADMIN = gql`
+	mutation RemoveCourseByAdmin($input: String!) {
+		removeCourseByAdmin(courseId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseLocation
+			courseAddress
+			courseTitle
+			coursePrice
+			courseFormat
+			courseAge
+			courseDuration
+			courseViews
+			courseLikes
+			courseImages
+			courseDesc
+			isOnline
+			isOffline
 			memberId
-			soldAt
+			cancelledAt
 			deletedAt
-			constructedAt
+			startDate
+			courseTimes {
+				day
+				time
+			}
+			courseDurationWeeks
+			coursesPerWeek
 			createdAt
 			updatedAt
 		}
@@ -147,6 +159,101 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 			commentGroup
 			commentContent
 			commentRefId
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+/**************************
+ *         FAQ        *
+ *************************/
+
+export const CREATE_FAQ = gql`
+	mutation CreateFaq($input: FaqInput!) {
+		createFaq(input: $input) {
+			_id
+			question
+			answer
+			status
+			category
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_FAQ = gql`
+	mutation UpdateFaq($input: UpdateFaqInput!) {
+		updateFaq(input: $input) {
+			_id
+			question
+			answer
+			status
+			category
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_FAQ = gql`
+	mutation DeleteFaq($id: String!) {
+		deleteFaq(id: $id)
+	}
+`;
+/**************************
+ *        NOTICE        *
+ *************************/
+
+export const CREATE_NOTICE = gql`
+	mutation CreateNotice($input: NoticeInput!) {
+		createNotice(input: $input) {
+			_id
+			noticeTitle
+			noticeContent
+			noticeStatus
+			memberId
+		}
+	}
+`;
+
+export const UPDATE_NOTICE = gql`
+	mutation UpdateNotice($input: UpdateNoticeInput!) {
+		updateNotice(input: $input) {
+			_id
+			noticeTitle
+			noticeContent
+			noticeStatus
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_NOTICE = gql`
+	mutation DeleteNotice($input: String!) {
+		deleteNotice(input: $input) {
+			_id
+			noticeStatus
+			noticeTitle
+			noticeContent
+			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const REMOVE_NOTICE_PERMANENTLY = gql`
+	mutation RemoveNoticePermanently($input: String!) {
+		removeNoticePermanently(input: $input) {
+			_id
+			noticeStatus
+			noticeTitle
+			noticeContent
 			memberId
 			createdAt
 			updatedAt

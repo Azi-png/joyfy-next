@@ -4,7 +4,7 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack } from '@mui/material';
 import MemberMenu from '../../libs/components/member/MemberMenu';
-import MemberProperties from '../../libs/components/member/MemberProperties';
+
 import { useRouter } from 'next/router';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
 import MemberArticles from '../../libs/components/member/MemberArticles';
@@ -15,6 +15,7 @@ import { userVar } from '../../apollo/store';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
+import MemberCourses from '../../libs/components/member/MemberCourses';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -41,7 +42,7 @@ const MemberPage: NextPage = () => {
 			router.replace(
 				{
 					pathname: router.pathname,
-					query: { ...router.query, category: 'properties' },
+					query: { ...router.query, category: 'courses' },
 				},
 				undefined,
 				{ shallow: true },
@@ -124,7 +125,7 @@ const MemberPage: NextPage = () => {
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
-									{category === 'properties' && <MemberProperties />}
+									{category === 'courses' && <MemberCourses />}
 									{category === 'followers' && (
 										<MemberFollowers
 											subscribeHandler={subscribeHandler}
