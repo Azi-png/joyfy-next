@@ -1,6 +1,4 @@
-version: '3.3'
-
-services:
+ services:
   joyfy-next:
     container_name: joyfy-next
     restart: always
